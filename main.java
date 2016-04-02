@@ -1,15 +1,13 @@
 package projeto_integrador;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.net.URL;
 
 /*
 PROJETO INTEGRADOR 
 
 PARA FAZER:
-ARRUMAR TODA ESSA BAGUNCA
-IMPLEMENTAR MENU
 IMPLEMENTAR ESTADOS DE JOGO
 IMPLEMENTAR PLATAFORMA
 IMPLEMENTAR ALVO
@@ -20,13 +18,12 @@ IMPLEMENTAR TODO O RESTO
 
 public class main {
     
-    public static int fps = 60;
-    public static float calculos[] = {1, 30, 1, 30, 60, 1, 45};
-    public void keyTyped(KeyEvent e) {}
+    public static float fps = 60;
+    public static float calculos[] = {1, 30, 1, 30, 60, 1, 50};
 
     
-    
     public static void main(String[] args) {
+
         main janela = new main();
         janela.cria_janela();
         
@@ -45,7 +42,7 @@ public class main {
         angulo = entrada[6];
         
         
-        t = t + (1 / fps);
+        t = t + (1f / fps);
         x = (float) (x_zero + v * Math.cos(angulo) * t);
         y = (float) (y_zero + v * Math.sin(angulo) * t - ((9.81 * (t * t)) / 2));
         
@@ -72,8 +69,9 @@ public class main {
     public void cria_janela() {
         
         float t;
-        int x = 0, y = 0;
-        calculos[6] = main.angulo_rad(calculos[6]);
+        int x = 0, y = 0, y_pointer = 280;
+        boolean sobe = true, game_start = false;
+        calculos[6] = angulo_rad(calculos[6]);
         
         JFrame janela = new JFrame("nome da janela aqui");
         janela.setSize(800, 600);
@@ -89,18 +87,59 @@ public class main {
         barra.setBounds(20, 40, 28, 240);
         
         JLabel pointer = pointer();
-        pointer.setBounds(20, 280, 28, 7);
+        pointer.setBounds(20, y_pointer, 28, 7);
         
         JLabel tela = tela_inicial();
         tela.setBounds(0, 0, 800, 600);
         
         JPanel jogo = new JPanel(null);
+        jogo.add(bird);
+        jogo.add(pointer);
+        jogo.add(barra);
+        jogo.add(cenario);
         jogo.add(tela);
+        
         
         janela.add(jogo);
         janela.setVisible(true);
         
-        while (true) {
+        while (game_start == false) {
+            
+            if (y_pointer <= 280 && sobe == true) {
+                y_pointer--;
+                if (y_pointer <= 40) {
+                    sobe = false;
+                }
+            }
+            else {
+                y_pointer++;
+                if (y_pointer >= 280) {
+                    sobe = true;
+                }
+            }
+            
+            bird.setBounds(x, ((y - 500) * (-1)), 32, 32);
+            pointer.setBounds(20, y_pointer, 28, 7);
+            barra.setBounds(20, 40, 28, 240);
+            cenario.setBounds(0, 0, 800, 600);
+            jogo.removeAll();
+            jogo.add(bird);
+            jogo.add(pointer);
+            jogo.add(barra);
+            jogo.add(cenario);
+            jogo.validate();
+            
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            
+            }
+            
+       
+        }
+        
+        while (game_start == true) {
             
             calculos = calcular_movimento(calculos);
             x = (int) (calculos[0]);
@@ -111,7 +150,7 @@ public class main {
             
             
             bird.setBounds(x, ((y - 500) * (-1)), 32, 32);
-            pointer.setBounds(20, 280, 28, 7);
+            pointer.setBounds(20, y_pointer, 28, 7);
             barra.setBounds(20, 40, 28, 240);
             cenario.setBounds(0, 0, 800, 600);
             jogo.removeAll();
@@ -126,14 +165,13 @@ public class main {
                 System.exit(0);
             }
             
-            
             try {
                 Thread.sleep(1);
             } catch (Exception e) {
                 e.printStackTrace();
             
             }
-            calculos[5] = calculos[5] + 0.01f;     //gambiarra de fps
+            
         }
         
         
@@ -191,43 +229,4 @@ public class main {
         return cenario;
     }
     
-    public static void testa_funcoes() {
-        //essa função eu criei só pra testar os calculos
-        //não precisa dela pro codigo funcionar
-        //
-        //mude o valor das variaveis de acordo com o que voçê precisar
-        //é só chamar testa_funções no seu main pra ver os calculos funcionarem
-        
-        float x, x_zero, y, y_zero, v, t, angulo_graus;
-        
-        while (true) {
-            
-            x = 1;
-            y = 1;          //só pra variavel não ficar vazia
-            
-            x_zero = 30;
-            y_zero = 30;    //posição inicial do objeto a ser lançado
-            
-            v = 50;         //velocidade em m/s (ou a força se preferir)
-            t = 11;          //tempo desde que o jogo começou (varia de > 0 a 14)
-            angulo_graus = 50;      //o angulo de lançamento
-            
-            angulo_graus = angulo_rad(angulo_graus);
-            
-            float[] test = {x, x_zero, y, y_zero, v, t, angulo_graus};
-            test = calcular_movimento(test);
-            
-            x = test[0];
-            y = test[2];
-            t = test[5];
-            
-            System.out.println("Resultado x = " + x);
-            System.out.println("Resultado y = " + y);
-            System.out.println("Resultado t = " + t);
-            
-            
-            System.exit(0);
-        }
-    }
 }
-
