@@ -135,7 +135,7 @@ public class main {
                 e.printStackTrace();
             
             }
-            
+            //ler o teclado aqui
        
         }
         
