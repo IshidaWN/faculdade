@@ -67,7 +67,7 @@ public class main {
         boolean sobe = true, game_start = false;
         calculos[6] = angulo_rad(calculos[6]);
         
-        JFrame janela = new JFrame("Projeto intgrador");
+        JFrame janela = new JFrame("Projeto integrador");
         janela.setSize(800, 600);
         janela.setDefaultCloseOperation(janela.EXIT_ON_CLOSE);
         
