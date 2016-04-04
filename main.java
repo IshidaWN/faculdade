@@ -6,9 +6,6 @@ import java.net.URL;
 
 /*
 PROJETO INTEGRADOR 
-
-PRIMEIRA VERSAO FUNCIONAL
-
 */
 
 
@@ -22,7 +19,19 @@ public class main {
     public static void main(String[] args) {
                 
         main janela = new main();
-        janela.cria_janela();
+        
+        while (true) {
+            janela.cria_janela();
+            
+            calculos[0] = 1;
+            calculos[1] = 30;
+            calculos[2] = 1;
+            calculos[3] = 30;
+            calculos[4] = 60;
+            calculos[5] = 1;
+            calculos[6] = 50;
+            b = false;
+        }
     }
     
     public static float[] calcular_movimento(float[] entrada) {
@@ -67,7 +76,7 @@ public class main {
         boolean sobe = true, game_start = false;
         calculos[6] = angulo_rad(calculos[6]);
         
-        JFrame janela = new JFrame("Projeto integrador");
+        JFrame janela = new JFrame("Projeto intgrador");
         janela.setSize(800, 600);
         janela.setDefaultCloseOperation(janela.EXIT_ON_CLOSE);
         
@@ -123,12 +132,7 @@ public class main {
             jogo.add(cenario);
             jogo.validate();
             
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-                e.printStackTrace();
-            
-            }
+            sleep(10);
             
             if (b == true) {
                 
@@ -157,18 +161,15 @@ public class main {
             jogo.add(cenario);
             jogo.validate();
             
-            if (calculos[4] < 1) {
+            if (calculos[4] < 1 || x > 850) {
                 System.out.println("fim do jogo");
-                System.exit(0);
+                JOptionPane.showMessageDialog(null, "Você é horrível, não acertou NADA!!!");
+                sleep(1000);
+                game_start = false;
             }
-            
-            try {
-                Thread.sleep(1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            
-            }
+            sleep(1);
         }
+        janela.setVisible(false);
     }
 
     
@@ -215,6 +216,14 @@ public class main {
     
     public void button_pressed() {
         b = true;
+    }
+    
+    public void sleep(int tempo) {
+        try {
+            Thread.sleep(tempo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }
