@@ -84,16 +84,16 @@ public class main {
         JButton button = button_class.button();
         button.setEnabled(true);
         
-        JLabel bird = red_bird();
+        JLabel bird = carrega_icon("angry-bird.png");
         bird.setBounds(x, y, 32, 32);
         
-        JLabel cenario = cenario();
+        JLabel cenario = carrega_icon("Summer_Pignic_Background.png");
         cenario.setBounds(0, 0, 800, 600);
         
-        JLabel barra = barra();
+        JLabel barra = carrega_icon("bar.png");
         barra.setBounds(20, 40, 28, 240);
         
-        JLabel pointer = pointer();
+        JLabel pointer = carrega_icon("pointer.png");
         pointer.setBounds(20, y_pointer, 28, 7);
         
         JPanel jogo = new JPanel(null);
@@ -172,46 +172,13 @@ public class main {
         janela.setVisible(false);
     }
 
-    
-    public JLabel barra() {
-        //carrega a imagem da barra
-        URL url = getClass().getResource("bar.png");
+    public JLabel carrega_icon(String nome_arquivo) {
+        URL url = getClass().getResource(nome_arquivo);
         Icon icon = new ImageIcon(url);
         
-        JLabel barra = new JLabel(icon);
+        JLabel carrega_icon = new JLabel (icon);
         
-        return barra;
-    }
-    
-    public JLabel pointer() {
-        //carrega aquela coisa que se-mexe
-        URL url = getClass().getResource("pointer.png");
-        Icon icon = new ImageIcon(url);
-        
-        JLabel pointer = new JLabel(icon);
-        
-        return pointer;
-    }
-    
-    public JLabel red_bird() {
-        //carrga a foto do red bird
-        URL url = getClass().getResource("angry-bird.png");
-        Icon icon = new ImageIcon(url);
-        
-        JLabel bird = new JLabel(icon);
-        
-        return bird;
-    }
-    
-    public JLabel cenario() {
-        //carrega o fundo da janela
-        URL url = getClass().getResource("Summer_Pignic_Background.png");
-        Icon icon = new ImageIcon(url);
-        
-        JLabel cenario = new JLabel(icon);
-        cenario.setBounds(0, 0, 800, 600);
-        
-        return cenario;
+        return carrega_icon;
     }
     
     public void button_pressed() {
