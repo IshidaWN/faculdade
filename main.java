@@ -43,11 +43,11 @@ public class main {
         angulo = entrada[6];
         
         t = t + (1f / fps);
-        x =(float) (x_zero + v * Math.cos(angulo) * t);
-        y =(float) (y_zero + v * Math.sin(angulo) * t - ((9.81 * (t * t)) / 2));
+        x = (float) (x_zero + v * Math.cos(angulo) * t);
+        y = (float) (y_zero + v * Math.sin(angulo) * t - ((9.81 * (t * t)) / 2));
         
         if (y <= 0 && t > 0) {
-            v =(float) (v * 0.6);
+            v = (float) (v * 0.6);
             x_zero = x;
             y_zero = 1f;
             y = 0f;
@@ -95,10 +95,7 @@ public class main {
         
         JLabel pig = carrega_icon("pig.png");
         pig.setBounds(600, 460, 90, 90);
-        
-        JLabel pig_hurted = carrega_icon("pig_hurted.png");
-        pig_hurted.setBounds(600, 460, 90, 90);
-        
+
         JPanel jogo = new JPanel(null);
         janela.add(button);
         jogo.add(bird);
@@ -106,7 +103,6 @@ public class main {
         jogo.add(pointer);
         jogo.add(barra);
         jogo.add(cenario);
-        jogo.add(pig_hurted);
         
         janela.add(jogo);
         janela.setVisible(true);
@@ -136,7 +132,6 @@ public class main {
             jogo.add(pointer);
             jogo.add(barra);
             jogo.add(cenario);
-            jogo.add(pig_hurted);
             jogo.validate();
             
             sleep(10);
@@ -167,7 +162,6 @@ public class main {
             jogo.add(pointer);
             jogo.add(barra);
             jogo.add(cenario);
-            jogo.add(pig_hurted);
             jogo.validate();
             
             if (calculos[4] < 1 || x > 850) {
@@ -179,7 +173,6 @@ public class main {
             if ((x >= 590 && y <= 59) && (x <= 650 && y >= 1)) {
                 jogo.removeAll();
                 jogo.add(bird);
-                jogo.add(pig_hurted);
                 jogo.add(pointer);
                 jogo.add(barra);
                 jogo.add(cenario);
