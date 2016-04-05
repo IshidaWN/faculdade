@@ -173,10 +173,10 @@ public class main {
             if ((x >= 590 && y <= 59) && (x <= 650 && y >= 1)) {
                 jogo.removeAll();
                 jogo.add(bird);
+                jogo.add(pig);
                 jogo.add(pointer);
                 jogo.add(barra);
                 jogo.add(cenario);
-                jogo.add(pig);
                 jogo.validate();
                 JOptionPane.showMessageDialog(null, "Acertou!!!");
                 game_start = false;
