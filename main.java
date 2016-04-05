@@ -8,13 +8,11 @@ import java.net.URL;
 PROJETO INTEGRADOR 
 */
 
-
 public class main {
     
     public static float fps = 50;
     public static float calculos[] = {1, 30, 1, 30, 60, 1, 50};
     public static boolean b = false;
-
     
     public static void main(String[] args) {
                 
@@ -45,11 +43,11 @@ public class main {
         angulo = entrada[6];
         
         t = t + (1f / fps);
-        x = (float) (x_zero + v * Math.cos(angulo) * t);
-        y = (float) (y_zero + v * Math.sin(angulo) * t - ((9.81 * (t * t)) / 2));
+        x =(float) (x_zero + v * Math.cos(angulo) * t);
+        y =(float) (y_zero + v * Math.sin(angulo) * t - ((9.81 * (t * t)) / 2));
         
         if (y <= 0 && t > 0) {
-            v = (float) (v * 0.6);
+            v =(float) (v * 0.6);
             x_zero = x;
             y_zero = 1f;
             y = 0f;
@@ -61,7 +59,6 @@ public class main {
     }
     
     public static float angulo_rad(float angulo_graus) {
-        //converte o angulo de graus para radianos
         float angulo;
         angulo = (float) (angulo_graus * (3.14159265359 / 180));
         
@@ -96,12 +93,20 @@ public class main {
         JLabel pointer = carrega_icon("pointer.png");
         pointer.setBounds(20, y_pointer, 28, 7);
         
+        JLabel pig = carrega_icon("pig.png");
+        pig.setBounds(600, 460, 90, 90);
+        
+        JLabel pig_hurted = carrega_icon("pig_hurted.png");
+        pig_hurted.setBounds(600, 460, 90, 90);
+        
         JPanel jogo = new JPanel(null);
         janela.add(button);
         jogo.add(bird);
+        jogo.add(pig);
         jogo.add(pointer);
         jogo.add(barra);
         jogo.add(cenario);
+        jogo.add(pig_hurted);
         
         janela.add(jogo);
         janela.setVisible(true);
@@ -127,9 +132,11 @@ public class main {
             cenario.setBounds(0, 0, 800, 600);
             jogo.removeAll();
             jogo.add(bird);
+            jogo.add(pig);
             jogo.add(pointer);
             jogo.add(barra);
             jogo.add(cenario);
+            jogo.add(pig_hurted);
             jogo.validate();
             
             sleep(10);
@@ -148,7 +155,7 @@ public class main {
             y = (int) (calculos[2]);
             t = calculos[5];
             
-            System.out.println("x = " + x + "  y = " + y + "  t = " + t);   //para debug
+            System.out.println("x = " + x + "  y = " + y + "  t = " + t);
                         
             bird.setBounds(x, ((y - 500) * (-1)), 32, 32);
             pointer.setBounds(20, y_pointer, 28, 7);
@@ -156,15 +163,29 @@ public class main {
             cenario.setBounds(0, 0, 800, 600);
             jogo.removeAll();
             jogo.add(bird);
+            jogo.add(pig);
             jogo.add(pointer);
             jogo.add(barra);
             jogo.add(cenario);
+            jogo.add(pig_hurted);
             jogo.validate();
             
             if (calculos[4] < 1 || x > 850) {
                 System.out.println("fim do jogo");
-                JOptionPane.showMessageDialog(null, "Você é horrível, não acertou NADA!!!");
-                sleep(1000);
+                JOptionPane.showMessageDialog(null, "ERROU!!!");
+                game_start = false;
+            }
+            
+            if ((x >= 590 && y <= 59) && (x <= 650 && y >= 1)) {
+                jogo.removeAll();
+                jogo.add(bird);
+                jogo.add(pig_hurted);
+                jogo.add(pointer);
+                jogo.add(barra);
+                jogo.add(cenario);
+                jogo.add(pig);
+                jogo.validate();
+                JOptionPane.showMessageDialog(null, "Acertou!!!");
                 game_start = false;
             }
             sleep(1);
