@@ -43,11 +43,11 @@ public class main {
         angulo = entrada[6];
         
         t = t + (1f / fps);
-        x = (float) (x_zero + v * Math.cos(angulo) * t);
-        y = (float) (y_zero + v * Math.sin(angulo) * t - ((9.81 * (t * t)) / 2));
+        x =(float) (x_zero + v * Math.cos(angulo) * t);
+        y =(float) (y_zero + v * Math.sin(angulo) * t - ((9.81 * (t * t)) / 2));
         
         if (y <= 0 && t > 0) {
-            v = (float) (v * 0.6);
+            v =(float) (v * 0.6);
             x_zero = x;
             y_zero = 1f;
             y = 0f;
@@ -73,7 +73,7 @@ public class main {
         boolean sobe = true, game_start = false;
         calculos[6] = angulo_rad(calculos[6]);
         
-        JFrame janela = new JFrame("Projeto intgrador");
+        JFrame janela = new JFrame("Projeto integrador");
         janela.setSize(800, 600);
         janela.setDefaultCloseOperation(janela.EXIT_ON_CLOSE);
         
