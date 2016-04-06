@@ -11,7 +11,7 @@ PROJETO INTEGRADOR
 public class main {
     
     public static float fps = 50;
-    public static float calculos[] = {1, 30, 1, 30, 60, 1, 50};
+    public static float calculos[] = {1, 1, 1, 1, 60, 1, 50};
     public static boolean b = false;
     
     public static void main(String[] args) {
