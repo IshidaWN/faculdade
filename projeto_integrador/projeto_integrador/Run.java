@@ -28,34 +28,34 @@ public class Run {
     }
     
     public static float[] calcularMovimento(float[] entrada) {
-        float x, xZero, y, yZero, velocidade, tempo, angulo;
+        float x, xZero, y, yZero, foca, tempo, angulo;
         x = entrada[0];
         xZero = entrada[1];
         y = entrada[2];
         yZero = entrada[3];
-        velocidade = entrada[4];
+        foca = entrada[4];
         tempo = entrada[5];
         angulo = entrada[6];
         
         tempo = tempo + (1f / FPS);
-        x =(float) (xZero + velocidade * Math.cos(angulo) * tempo);
-        y =(float) (yZero + velocidade * Math.sin(angulo) * tempo - ((G * (tempo * tempo)) / 2));
+        x =(float) (xZero + foca * Math.cos(angulo) * tempo);
+        y =(float) (yZero + foca * Math.sin(angulo) * tempo - ((G * (tempo * tempo)) / 2));
         
         if (y <= 0 && tempo > 0) {
-            velocidade =(float) (velocidade * 0.6);
+            foca =(float) (foca * 0.6);
             xZero = x;
             yZero = 1f;
             y = 0f;
             tempo = 0f;
             
         }
-        float[] resultado = {x, xZero, y, yZero, velocidade, tempo, angulo};
+        float[] resultado = {x, xZero, y, yZero, foca, tempo, angulo};
         return resultado;
     }
     
-    public static float angulo_rad(float angulo_graus) {
+    public static float anguloRad(float anguloGraus) {
         float angulo;
-        angulo = (float) (angulo_graus * (3.14159265359 / 180));
+        angulo = (float) (anguloGraus * (3.14159265359 / 180));
         
         return angulo;
     }
@@ -63,7 +63,6 @@ public class Run {
     public void jogo() {
         
     	float calculos[] = {1, 1, 1, 1, 60, 1, 50};
-        //boolean keyPressed = false;
         int x = 0, y = 0, yPointer = 280;
         boolean sobe = true, gameStart = false;
         keyPressed = false;
@@ -105,11 +104,33 @@ public class Run {
         
         JLabel pig = carregaIcon("pig.png");
         pig.setBounds(600, 460, 90, 90);
+        
+        JLabel forca = wordLabel("Força");
+        forca.setBounds(20, 10, 80, 20);
+        JLabel angulo = wordLabel("Ângulo");
+        angulo.setBounds(60, 10, 80, 20);
+        JLabel num01 = wordLabel("0");
+        JLabel num02 = wordLabel("0°");
+        JLabel num100 = wordLabel("100");
+        JLabel num90 = wordLabel("90°");
+        JLabel velocidade = wordLabel("Velocidade = " + 0);
+        num01.setBounds(10, 270, 10, 10);
+        num02.setBounds(90, 270, 20, 10);
+        num100.setBounds(10, 30, 30, 10);
+        num90.setBounds(90, 30, 30, 10);
+        velocidade.setBounds(10, 300, 280, 10);
 
         JPanel jogo = new JPanel(null);
         janela.add(button);
         jogo.add(bird);
         jogo.add(pig);
+        jogo.add(forca);
+        jogo.add(angulo);
+        jogo.add(num01);
+        jogo.add(num02);
+        jogo.add(num100);
+        jogo.add(num90);
+        jogo.add(velocidade);
         jogo.add(ponteiroForca);
         jogo.add(ponteiroAngulo);
         jogo.add(barraForca);
@@ -134,11 +155,20 @@ public class Run {
                 }
             }
             
+            jogo.setVisible(false);
+            
             bird.setBounds(x, (y - 500) * (-1), 32, 32);
             ponteiroForca.setBounds(20, yPointer, 28, 7);
             jogo.removeAll();
             jogo.add(bird);
             jogo.add(pig);
+            jogo.add(forca);
+            jogo.add(angulo);
+            jogo.add(num01);
+            jogo.add(num02);
+            jogo.add(num100);
+            jogo.add(num90);
+            jogo.add(velocidade);
             jogo.add(ponteiroForca);
             jogo.add(ponteiroAngulo);
             jogo.add(barraForca);
@@ -146,7 +176,9 @@ public class Run {
             jogo.add(cenario);
             jogo.validate();
             
-            sleep(8);
+            jogo.setVisible(true);
+            
+            sleep(7);
             
             if (keyPressed == true) {
                 
@@ -167,11 +199,20 @@ public class Run {
                             sobe = true;
                         }
                     }
+            		
+            		jogo.setVisible(false);
                     
                     ponteiroAngulo.setBounds(60, yPointer, 28, 7);
                     jogo.removeAll();
                     jogo.add(bird);
                     jogo.add(pig);
+                    jogo.add(forca);
+                    jogo.add(angulo);
+                    jogo.add(num01);
+                    jogo.add(num02);
+                    jogo.add(num100);
+                    jogo.add(num90);
+                    jogo.add(velocidade);
                     jogo.add(ponteiroForca);
                     jogo.add(ponteiroAngulo);
                     jogo.add(barraForca);
@@ -179,33 +220,49 @@ public class Run {
                     jogo.add(cenario);
                     jogo.validate();
                     
-                    sleep(8);
+                    jogo.setVisible(true);
+                    
+                    sleep(7);
             	}
             	
                 calculos[6] = (float) (((yPointer - 280) * (-1)) / 2.4f) * 0.9f;
-                calculos[6] = angulo_rad(calculos[6]);
+                calculos[6] = anguloRad(calculos[6]);
                 gameStart = true;
             }
         }
         
         while (gameStart == true) {
+        	
+        	jogo.setVisible(false);
             
             calculos = calcularMovimento(calculos);
             x = (int) (calculos[0]);
             y = (int) (calculos[2]);
             
             System.out.println("x = " + x + "  y = " + y + "  velocidade = " + calculos[4]);
+            
+            velocidade = wordLabel("Velocidade = " + (int) calculos[4]);
+            velocidade.setBounds(10, 300, 280, 10);
                         
-            bird.setBounds(x, ((y - 500) * (-1)), 32, 32);
+            bird.setBounds(x, (y - 500) * (-1), 32, 32);
             jogo.removeAll();
             jogo.add(bird);
             jogo.add(pig);
+            jogo.add(forca);
+            jogo.add(angulo);
+            jogo.add(num01);
+            jogo.add(num02);
+            jogo.add(num100);
+            jogo.add(num90);
+            jogo.add(velocidade);
             jogo.add(ponteiroForca);
             jogo.add(ponteiroAngulo);
             jogo.add(barraForca);
             jogo.add(barraAngulo);
             jogo.add(cenario);
             jogo.validate();
+            
+            jogo.setVisible(true);
             
             if (calculos[4] < 1 || x > 850) {
                 System.out.println("fim do jogo");
@@ -214,13 +271,6 @@ public class Run {
             }
             
             if ((x >= 590 && y <= 59) && (x <= 650 && y >= 1)) {
-                jogo.removeAll();
-                jogo.add(bird);
-                jogo.add(pig);
-                jogo.add(ponteiroForca);
-                jogo.add(barraForca);
-                jogo.add(cenario);
-                jogo.validate();
                 JOptionPane.showMessageDialog(null, "Acertou!!!");
                 gameStart = false;
             }
@@ -236,6 +286,12 @@ public class Run {
         JLabel carregaIcon = new JLabel (icon);
         
         return carregaIcon;
+    }
+    
+    public JLabel wordLabel(String word) {
+    	JLabel wLabel = new JLabel(word);
+    	
+    	return wLabel;
     }
     
     public void sleep(int tempo) {
