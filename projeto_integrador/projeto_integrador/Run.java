@@ -64,6 +64,7 @@ public class Run {
         
     	float calculos[] = {1, 1, 1, 1, 60, 1, 50};
         int x = 0, y = 0, yPointer = 280;
+        int contador1 = 0, ultimoY = 0, ultimoX = 0;
         boolean sobe = true, gameStart = false;
         keyPressed = false;
         
@@ -105,20 +106,22 @@ public class Run {
         JLabel pig = carregaIcon("pig.png");
         pig.setBounds(600, 460, 90, 90);
         
-        JLabel forca = wordLabel("ForÃ§a");
+        JLabel forca = wordLabel("Força");
         forca.setBounds(20, 10, 80, 20);
-        JLabel angulo = wordLabel("Ã‚ngulo");
+        JLabel angulo = wordLabel("Ângulo");
         angulo.setBounds(60, 10, 80, 20);
         JLabel num01 = wordLabel("0");
-        JLabel num02 = wordLabel("0Â°");
+        JLabel num02 = wordLabel("0°");
         JLabel num100 = wordLabel("100");
-        JLabel num90 = wordLabel("90Â°");
+        JLabel num90 = wordLabel("90°");
         JLabel velocidade = wordLabel("Velocidade = " + 0);
         num01.setBounds(10, 270, 10, 10);
         num02.setBounds(90, 270, 20, 10);
         num100.setBounds(10, 30, 30, 10);
         num90.setBounds(90, 30, 30, 10);
         velocidade.setBounds(10, 300, 280, 10);
+        
+        JLabel[] dots = new JLabel[180];
 
         JPanel jogo = new JPanel(null);
         janela.add(button);
@@ -248,6 +251,20 @@ public class Run {
             jogo.removeAll();
             jogo.add(bird);
             jogo.add(pig);
+            
+            if (contador1 < 180) {
+            	if ((y - ultimoY >= 10 || y - ultimoY <= (-10)) || x - ultimoX >= 10) {
+            		ultimoX = x;
+            		ultimoY = y;
+                	dots[contador1] = carregaIcon("reddot.png");
+                	dots[contador1].setBounds(x, (y - 510) * (-1), 10, 10);
+                	contador1++;
+            	}
+            }
+            for (int i = 0; i < contador1; i++) {
+        		jogo.add(dots[i]);
+        	}
+            
             jogo.add(forca);
             jogo.add(angulo);
             jogo.add(num01);
